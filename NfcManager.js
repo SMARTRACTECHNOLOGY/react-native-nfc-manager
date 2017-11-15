@@ -35,6 +35,11 @@ class NfcManager {
       })
   }
 
+  stop() {
+    this._session.remove();
+    this._session = null;
+  }
+
   isEnabled() {
     return new Promise((resolve, reject) => {
       NativeNfcManager.isEnabled((err, result) => {
@@ -90,8 +95,6 @@ class NfcManager {
 
   _handleSessionClosed = () => {
     this._clientTagDiscoveryListener = null;
-    this._session.remove();
-    this._session = null;
     this._clientSessionClosedListener && this._clientSessionClosedListener();
   }
 }
